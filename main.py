@@ -7,6 +7,12 @@ Automatic forecasting procedure for business time series.
 import sys
 from pathlib import Path
 
+import logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 # Add src to path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -69,14 +75,14 @@ def main():
         value_column=config["data"].get("value_column", "value")
     )
     
-    print(f"Loaded {len(series)} data points")
-    print(f"Date range: {series.index.min()} to {series.index.max()}")
+    logger.info(f"Loaded {len(series)} data points")
+    logger.info(f"Date range: {series.index.min()} to {series.index.max()}")
     
     # Prepare data for Prophet
     df = prepare_data(series)
     
     # Create and fit model
-    print("\nFitting Prophet model...")
+    logger.info("\nFitting Prophet model...")
     model = create_prophet_model(config)
     forecast = fit_and_predict(model, df, config)
     
@@ -96,7 +102,7 @@ def main():
     }, index=forecast_series.index)
     
     # Create plot using consolidated plotting utility
-    print("\nCreating visualization...")
+    logger.info("\nCreating visualization...")
     fig, ax = create_forecast_plot(
         train=series,
         forecast=forecast_series,
@@ -114,9 +120,9 @@ def main():
             output_dir / "prophet_forecast.png",
             dpi=config.get("output", {}).get("dpi", 300)
         )
-        print(f"Plot saved to: {plot_path}")
+        logger.info(f"Plot saved to: {plot_path}")
     
-    print("\n Prophet forecasting complete")
+    logger.info("\n Prophet forecasting complete")
     
     # Show plot if configured
     if config.get("plotting", {}).get("show_plot", True):
