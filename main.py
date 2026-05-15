@@ -4,7 +4,6 @@ Prophet: Facebook's Time Series Forecasting
 Automatic forecasting procedure for business time series.
 """
 
-import sys
 from pathlib import Path
 
 import logging
@@ -87,7 +86,7 @@ def main():
     
     # Extract forecast components
     forecast_period = forecast[forecast["ds"] > series.index.max()]
-    historical_period = forecast[forecast["ds"] <= series.index.max()]
+    forecast[forecast["ds"] <= series.index.max()]
     
     # Create forecast Series with confidence intervals
     forecast_series = pd.Series(
