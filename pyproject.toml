@@ -1,0 +1,23 @@
+[project]
+name = "orbit-and-prophet-for-bayesian-time-series-forecasting"
+version = "0.1.0"
+description = "Companion code for Medium article: orbit and prophet for bayesian time series forecasting"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "matplotlib>=3.10.9",
+    "pandas>=2.3.3",
+    "prophet>=1.1.6",
+    "pyyaml>=6.0.3",
+    "signalplot>=0.1",
+]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
